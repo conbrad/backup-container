@@ -325,6 +325,26 @@ parameters:
     description: FTP password
     required: false
     value: ""
+  - name: OBJECT_STORE_SECRET
+    displayName: Object Store Secret Key
+    description: The object store secret key is used to wire up the credentials associated to the object store.
+    required: false
+    value: object-store-secret
+  - name: OBJECT_STORE_HOST
+    displayName: Object store Server
+    description: The domain name of the backup object store server
+    required: false
+    value: ""
+  - name: OBJECT_STORE_KEY
+    displayName: Object store key
+    description: Object store key
+    required: false
+    value: ""
+  - name: OBJECT_STORE_BUCKET
+    displayName: Object store bucket to store the backups
+    description: Object store bucket to store the backups
+    required: false
+    value: ""
   - name: WEBHOOK_URL
     displayName: Webhook URL
     description: The URL of the webhook to use for notifications.  If not specified, the webhook integration feature is disabled.

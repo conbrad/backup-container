@@ -1,0 +1,31 @@
+#!/bin/bash
+# =================================================================================================================
+# Object Store Support Functions:
+# -----------------------------------------------------------------------------------------------------------------
+function objectStoreBackup(){
+  (
+    if [ -z "${OBJECT_STORE_SECRET}" || -z "${OBJECT_STORE_HOST}" || -z "${OBJECT_STORE_KEY}" || -z "${OBJECT_STORE_BUCKET}"] ; then
+      return 0
+    fi
+
+    _filename=${1}
+    _filenameWithExtension="${_filename}${BACKUP_FILE_EXTENSION}"
+
+    echo "Installing object store backup python script dependencies"
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py > get-poetry.py && \
+    POETRY_HOME=/opt/poetry python3 get-poetry.py --version 1.1.8 && \
+    cd /usr/local/bin && \
+    ln -s /opt/poetry/bin/poetry
+
+    cd objectstore
+    poetry install
+    poetry run python backup.py ${_filenameWithExtension}
+
+    if [ ${?} -eq 0 ]; then
+      logInfo "Successfully transferred ${_filenameWithExtension} to the object store server"
+    else
+      logError "Failed to transfer ${_filenameWithExtension} with the exit code ${?}"
+    fi
+  )
+}
+# =================================================================================================================
