@@ -5,6 +5,7 @@
 function objectStoreBackup(){
   (
     if [ -z "${OBJECT_STORE_SECRET}" || -z "${OBJECT_STORE_HOST}" || -z "${OBJECT_STORE_KEY}" || -z "${OBJECT_STORE_BUCKET}"] ; then
+      # Object store not configured. 
       return 0
     fi
 
